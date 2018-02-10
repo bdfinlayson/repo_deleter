@@ -1,19 +1,12 @@
 defmodule RepoDeleter do
-  @moduledoc """
-  Documentation for RepoDeleter.
-  """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> RepoDeleter.hello
-      :world
-
-  """
   def main(args) do
-    args |> parse_options |> perform
+    args |> parse_options |> process
+  end
+
+  def process(options) do
+    if(options[:list]) do
+      RepoList.perform options[:list]
+    end
   end
 
   defp parse_options([]) do
@@ -24,14 +17,9 @@ defmodule RepoDeleter do
     {options, _, _} = OptionParser.parse(
       args,
       switches: [
-        password: :string,
-        email: :string
+        list: :string
       ]
     )
     options
-  end
-
-  defp perform(options) do
-    IO.puts "Email is #{options[:email]} and Password is #{options[:password]}"
   end
 end
