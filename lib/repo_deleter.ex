@@ -5,7 +5,9 @@ defmodule RepoDeleter do
 
   def process(options) do
     if(options[:list]) do
-      RepoList.perform options[:list]
+      options[:list]
+      |> String.to_integer
+      |> RepoList.perform
     end
   end
 

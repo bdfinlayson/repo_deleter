@@ -1,7 +1,11 @@
 defmodule RepoList do
   def perform(number) do
-    get_data(number)
-    |> Presenter.perform
+    if(number > 0 && number <= 100) do
+      get_data(number)
+      |> Presenter.perform
+    else
+      Presenter.perform("Can only show between 1 to 100 repos at a time")
+    end
   end
 
   defp get_data(number) do
@@ -9,6 +13,10 @@ defmodule RepoList do
     |> Poison.encode!()
     |> GraphQl.post
     |> get_in(["data", "viewer", "repositories", "nodes"])
-    |> Enum.map(& &1["name"])
+    |> process_result
+  end
+
+  defp process_result(data = [_|_]) do
+    data |> Enum.map(& &1["name"])
   end
 end
