@@ -4,6 +4,7 @@ defmodule RepoList do
   def perform(number) when is_integer(number) do
     if(number > 0 && number <= 100) do
       get_data(number)
+      |> process_result
       |> Presenter.perform
     else
       Presenter.perform("Can only show between 1 to 100 repos at a time")
@@ -19,15 +20,14 @@ defmodule RepoList do
     end
   end
 
-  defp get_data(number) when is_integer(number) do
+  def get_data(number) when is_integer(number) do
     number
     |> respositories_query
     |> post
     |> get_in(["data", "viewer", "repositories", "nodes"])
-    |> process_result
   end
 
-  defp get_data(command) when is_atom(command) do
+  def get_data(command) when is_atom(command) do
     case command do
       :total_count ->
         total_count_query

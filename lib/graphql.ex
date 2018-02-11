@@ -8,7 +8,7 @@ defmodule GraphQl do
     end
   end
 
-  defp auth_key do
+  def auth_key do
     System.get_env("GITHUB_KEY")
   end
 end

@@ -6,7 +6,7 @@ defmodule Presenter do
   end
 
   def perform(message) when is_binary(message) do
-    message |> TableRex.quick_render! |> IO.puts
+    message |> format |> IO.puts
   end
 
   def perform(number) when is_integer(number) do
@@ -15,6 +15,19 @@ defmodule Presenter do
 
   def perform(_) do
     IO.puts "There was an error"
+  end
+
+  def deletion_message(response, repo) do
+    if(response.status_code == 204) do
+      IO.puts("\n")
+      IO.puts("Repository #{repo} successfully destroyed!")
+      IO.puts("You now have this many respositories remaining:")
+      RepoList.perform(:total_count)
+    else
+      IO.puts("\n")
+      IO.puts("Unable to destroy repo for the following reason:")
+      IO.puts response.body
+    end
   end
 
   defp format(data) when is_list(data) do

@@ -10,7 +10,26 @@ defmodule RepoDeleter do
       |> RepoList.perform
     end
 
-    if options[:totalcount] do
+    if(options[:delete]) do
+      {:ok, response} = options[:delete] |> Rest.delete
+    end
+
+    if (options[:deleteAll] && options[:confirm]) do
+      RepoList.get_data(100)
+      |> Enum.map(& &1["name"])
+      |> Enum.each(fn(repo) ->
+        IO.puts "Do you want to delete this repo?: #{repo}"
+        input = IO.gets "yes or no? "
+        if(String.match?(input, ~r/yes|(y\n)/)) do
+          {:ok, response} = Rest.delete(repo)
+          Presenter.deletion_message(response, repo)
+        else
+          IO.puts "Ok, skipping repo #{repo}"
+        end
+      end)
+    end
+
+    if options[:totalCount] do
       RepoList.perform(:total_count)
     end
   end
@@ -24,7 +43,8 @@ defmodule RepoDeleter do
       args,
       switches: [
         list: :string,
-        totalcount: :boolean
+        totalCount: :boolean,
+        delete: :string
       ]
     )
     options
