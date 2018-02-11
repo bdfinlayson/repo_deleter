@@ -9,6 +9,10 @@ defmodule RepoDeleter do
       |> String.to_integer
       |> RepoList.perform
     end
+
+    if options[:totalcount] do
+      RepoList.perform(:total_count)
+    end
   end
 
   defp parse_options([]) do
@@ -19,7 +23,8 @@ defmodule RepoDeleter do
     {options, _, _} = OptionParser.parse(
       args,
       switches: [
-        list: :string
+        list: :string,
+        totalcount: :boolean
       ]
     )
     options

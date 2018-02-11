@@ -9,6 +9,10 @@ defmodule Presenter do
     message |> format |> IO.puts
   end
 
+  def perform(number) when is_integer(number) do
+    number |> Integer.to_string |> format |> IO.puts
+  end
+
   def perform(_) do
     IO.puts "There was an error"
   end
