@@ -10,8 +10,8 @@ Because deleting many repos from a cluttered Github profile is a major pain...
 - Add your Github Personall Access Token as an environment variable:
   - To generate a token, visit: https://github.com/settings/tokens and click "Generate new token"
   - Copy the token string
-  - Set GITHUB_PERSONAL_ACCESS_TOKEN to the token
-- Also in your environment, set GITHUB_USERNAME to your Github username (e.g. bdfinlayson)
+  - Set `GITHUB_PERSONAL_ACCESS_TOKEN` to the token
+- Also in your environment, set `GITHUB_USERNAME` to your Github username (e.g. bdfinlayson)
 
 ## Usage
 The CLI accepts a number of switches:
