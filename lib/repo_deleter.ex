@@ -12,6 +12,7 @@ defmodule RepoDeleter do
 
     if(options[:delete]) do
       {:ok, response} = options[:delete] |> Rest.delete
+      Presenter.deletion_message(response, options[:delete])
     end
 
     if (options[:deleteAll] && options[:confirm]) do
