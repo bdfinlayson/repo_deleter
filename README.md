@@ -67,7 +67,7 @@ You now have this many respositories remaining:
 - Running `./repo_deleter --delete savings-multiplied-metroui` will delete the repo and output:
 
 ```
-Repository mochabucks successfully destroyed!
+Repository savings-multiplied-metroui successfully destroyed!
 You now have this many respositories remaining:
 +------------+-----+
 | totalCount | 119 |
