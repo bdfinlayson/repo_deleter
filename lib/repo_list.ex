@@ -1,4 +1,6 @@
 defmodule RepoList do
+  @fields ["id", "name", "updatedAt"]
+
   def perform(number) when is_integer(number) do
     if(number > 0 && number <= 100) do
       get_data(number)
@@ -30,12 +32,16 @@ defmodule RepoList do
       :total_count ->
         total_count_query
         |> post
-        |> get_in(["data", "viewer", "repositories", "totalCount"])
+        |> get_in(["data", "viewer", "repositories"])
+        |> Map.to_list
+        |> Enum.map(fn(tuple) ->
+          Tuple.to_list(tuple)
+        end)
     end
   end
 
   defp respositories_query(number) do
-    "repositories(first:#{number}) { nodes { name }}"
+    "repositories(first:#{number}) { nodes { #{Enum.join(@fields, " ")} }}"
     |> base_query
   end
 
@@ -55,6 +61,12 @@ defmodule RepoList do
   end
 
   defp process_result(data) when is_list(data) do
-    data |> Enum.map(& &1["name"])
+    data
+    |> Enum.map(fn(repo_info) ->
+      {:ok, date, 0} = DateTime.from_iso8601(repo_info["updatedAt"])
+      Map.values(repo_info)
+      |> List.replace_at(2, "#{date.year}-#{date.month}-#{date.day}")
+    end)
+    |> List.insert_at(0, @fields)
   end
 end

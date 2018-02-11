@@ -2,11 +2,11 @@ defmodule Presenter do
   @spacing "\n\t"
 
   def perform(data) when is_list(data) do
-    data |> format |> IO.puts
+    data |> TableRex.quick_render! |> IO.puts
   end
 
   def perform(message) when is_binary(message) do
-    message |> format |> IO.puts
+    message |> TableRex.quick_render! |> IO.puts
   end
 
   def perform(number) when is_integer(number) do
@@ -20,8 +20,7 @@ defmodule Presenter do
   defp format(data) when is_list(data) do
     data
     |> Enum.sort
-    |> List.insert_at(0, "")
-    |> Enum.join(@spacing)
+    |> Enum.to_list
   end
 
   defp format(message) when is_binary(message) do
