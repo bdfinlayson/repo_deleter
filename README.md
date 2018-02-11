@@ -16,10 +16,10 @@ Because deleting many repos from a cluttered Github profile is a major pain...
 ## Usage
 The CLI accepts a number of switches:
 
-- `--totalcount`: run this to view a count of the total number of repos in your Github account
-- `--list [number]`: run this to list a certain number of repos from your account
-- `--delete [repo_name]`: run this to delete a specific repo from your account
-- `--deleteAll --confirm`: run this to cycle through all your repos and confirm whether you want to delete each one
+- `--totalcount`: use this to view a count of the total number of repos in your Github account
+- `--list [number]`: use this to list a certain number of repos from your account
+- `--delete [repo_name]`: use this to delete a specific repo from your account
+- `--deleteAll --confirm`: use this to cycle through all your repos and confirm whether you want to delete each one
 
 ## Example Usage
 - Running `./repo_deleter --deleteAll --confirm` will give you the following output:
